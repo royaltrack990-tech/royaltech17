@@ -2,7 +2,6 @@
 export const navStructure = {
   en: [
     { label: 'Home', to: '/' },
-    { label: 'About Us', to: '/about' },
     {
       label: 'Royal Tech Oil and Gas Fields Services',
       to: '/rofs-uae',
@@ -53,12 +52,10 @@ export const navStructure = {
       ],
     },
     { label: 'Products', to: '/products' },
-    { label: 'Our Partners', to: '/partners' },
     { label: 'Contact', to: '/contact' },
   ],
   ar: [
     { label: 'الرئيسية', to: '/' },
-    { label: 'من نحن', to: '/about' },
     {
       label: 'رويال تك لخدمات حقول النفط والغاز',
       to: '/rofs-uae',
@@ -109,7 +106,6 @@ export const navStructure = {
       ],
     },
     { label: 'المنتجات', to: '/products' },
-    { label: 'شركاؤنا', to: '/partners' },
     { label: 'تواصل معنا', to: '/contact' },
   ],
 }
