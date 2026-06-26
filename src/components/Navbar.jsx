@@ -15,6 +15,16 @@ export default function Navbar() {
   const [mobileOpenIdx, setMobileOpenIdx] = useState(null)
   const location = useLocation()
   const navRef = useRef(null)
+  const closeTimer = useRef(null)
+
+  const openNow = (i) => {
+    clearTimeout(closeTimer.current)
+    setOpenIdx(i)
+  }
+  const closeWithDelay = () => {
+    clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setOpenIdx(null), 250)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -29,6 +39,8 @@ export default function Navbar() {
     document.addEventListener('mousedown', onClick)
     return () => document.removeEventListener('mousedown', onClick)
   }, [])
+
+  useEffect(() => () => clearTimeout(closeTimer.current), [])
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${menuOpen ? 'navbar--open' : ''}`} ref={navRef}>
@@ -45,8 +57,8 @@ export default function Navbar() {
               <li
                 key={item.to + i}
                 className="navbar__item"
-                onMouseEnter={() => hasDropdown && setOpenIdx(i)}
-                onMouseLeave={() => hasDropdown && setOpenIdx(null)}
+                onMouseEnter={() => hasDropdown && openNow(i)}
+                onMouseLeave={() => hasDropdown && closeWithDelay()}
               >
                 <Link to={item.to} className={isActive ? 'active' : ''}>
                   {item.label}
@@ -56,7 +68,7 @@ export default function Navbar() {
                 </Link>
 
                 {item.mega && openIdx === i && (
-                  <div className="navbar__mega">
+                  <div className="navbar__mega" onMouseEnter={() => openNow(i)} onMouseLeave={closeWithDelay}>
                     {item.mega.map((col, ci) => (
                       <div className="navbar__mega-col" key={ci}>
                         <span className="navbar__mega-title">{col.title}</span>
@@ -69,7 +81,7 @@ export default function Navbar() {
                 )}
 
                 {item.flat && openIdx === i && (
-                  <div className="navbar__dropdown-menu navbar__dropdown-menu--flat">
+                  <div className="navbar__dropdown-menu navbar__dropdown-menu--flat" onMouseEnter={() => openNow(i)} onMouseLeave={closeWithDelay}>
                     {item.flat.map(sub => (
                       <Link key={sub.to} to={sub.to}>{sub.label}</Link>
                     ))}
