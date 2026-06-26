@@ -1,0 +1,130 @@
+.companies { background: #0C2340; position: relative; }
+.companies::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; z-index: 5;
+  background: linear-gradient(90deg, transparent, rgba(245,166,35,0.25), transparent);
+}
+
+/* Shared header styles (used by intro panel + mobile header) */
+.companies__eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.companies__eyebrow-line { display: block; width: 28px; height: 1px; background: var(--gold); }
+.companies__heading {
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: clamp(2.1rem, 3.6vw, 3rem); letter-spacing: -0.01em; color: var(--white); margin-bottom: 0.875rem;
+}
+.companies__subheading { font-size: 1.1rem; color: rgba(255,255,255,0.92); max-width: 480px; line-height: 1.7; }
+
+/* ================= DESKTOP — Horizontal scroll-pin ================= */
+.companies-hscroll { position: relative; }
+.companies-hscroll__pin {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; align-items: center;
+}
+
+.companies-hscroll__progress {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 6;
+  background: rgba(255,255,255,0.08);
+}
+.companies-hscroll__progress-fill { height: 100%; background: var(--gold); transition: width 0.1s linear; }
+
+.companies-hscroll__track {
+  display: flex; align-items: center; height: 100%;
+  will-change: transform;
+}
+
+.hscroll-intro {
+  flex: 0 0 42vw; min-width: 380px; padding: 0 4vw;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hscroll-intro__hint {
+  display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem;
+  font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+}
+.hscroll-intro__hint svg { color: var(--gold); animation: hintSlide 1.6s ease-in-out infinite; }
+@keyframes hintSlide { 0%,100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+
+.company-panel {
+  flex: 0 0 78vw; min-width: 560px; height: 82vh; max-height: 720px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: center;
+  padding: 0 4vw; margin-right: 2vw;
+  position: relative;
+}
+
+.company-panel__img {
+  width: 100%; height: 100%; border-radius: 16px;
+  background-size: cover; background-position: center;
+  position: relative; overflow: hidden;
+}
+.company-panel__img-overlay { position: absolute; inset: 0; }
+
+.company-panel__content { display: flex; flex-direction: column; }
+.company-panel__pictorial { width: 64px; height: 64px; margin-bottom: 1.25rem; opacity: 0.9; }
+.company-panel__pictorial svg { width: 100%; height: 100%; }
+
+.company-panel__tag {
+  display: inline-block; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.275rem 0.7rem; border-radius: 50px; border: 1px solid; margin-bottom: 0.875rem; align-self: flex-start;
+}
+.company-panel__name {
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem); color: var(--white); line-height: 1.1; margin-bottom: 1rem;
+}
+.company-panel__desc { font-size: 0.98rem; color: rgba(255,255,255,0.9); line-height: 1.75; margin-bottom: 1.25rem; }
+
+.company-panel__services { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.5rem; }
+.company-panel__services li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.84rem; font-weight: 500; color: rgba(255,255,255,0.7); }
+.company-panel__services .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+.company-panel__cta {
+  display: inline-flex; align-items: center; gap: 0.5rem; align-self: flex-start;
+  font-size: 0.85rem; font-weight: 600; color: var(--accent, var(--gold)); letter-spacing: 0.02em;
+  padding: 0.7rem 1.375rem; border: 1.5px solid currentColor; border-radius: 6px;
+  transition: background 0.25s ease, color 0.25s ease, gap 0.25s ease;
+}
+.company-panel__cta:hover { background: var(--accent, var(--gold)); color: var(--navy); gap: 0.75rem; }
+
+.company-panel__num {
+  position: absolute; top: 1.5rem; right: 4vw;
+  font-family: var(--font-heading); font-size: 5rem; font-weight: 800;
+  color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none;
+}
+
+/* ================= MOBILE — Vertical stacked (reuses old card design) ================= */
+.companies--mobile { padding: 5rem 0; }
+.companies--mobile .companies__header { text-align: center; margin-bottom: 3rem; }
+.companies--mobile .companies__heading { }
+.companies--mobile .companies__subheading { margin: 0 auto; text-align: center; }
+
+.company-card {
+  display: flex; flex-direction: column; gap: 1.75rem;
+  padding: 2.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.company-card:last-child { border-bottom: none; }
+
+.company-card__img-wrap { position: relative; }
+.company-card__img {
+  width: 100%; aspect-ratio: 4/3; border-radius: 12px;
+  background-size: cover; background-position: center; position: relative; overflow: hidden;
+}
+.company-card__img-overlay { position: absolute; inset: 0; border-radius: 12px; }
+.company-card__accent-bar { position: absolute; bottom: -1px; left: 1.25rem; right: 1.25rem; height: 3px; border-radius: 3px 3px 0 0; opacity: 0.7; }
+
+.company-card__pictorial { width: 56px; height: 56px; margin-bottom: 1rem; opacity: 0.85; }
+.company-card__pictorial svg { width: 100%; height: 100%; }
+.company-card__tag {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.65rem; border-radius: 50px; border: 1px solid; margin-bottom: 0.75rem;
+}
+.company-card__name { font-family: var(--font-heading); font-weight: 800; font-size: 1.4rem; color: var(--white); line-height: 1.15; margin-bottom: 0.875rem; }
+.company-card__desc { font-size: 0.92rem; color: rgba(255,255,255,0.9); line-height: 1.75; margin-bottom: 1rem; }
+.company-card__services { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.5rem; }
+.company-card__service { display: flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+.company-card__service-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .companies--mobile { padding: 4rem 0; }
+}
