@@ -26,7 +26,7 @@ export default function AboutSection() {
   return (
     <section className="about-section" ref={ref}>
       <div className="about-section__inner section-container">
-        <div className="about-section__visual reveal-left">
+        <div className="about-section__visual reveal">
           <div className="about-section__img-wrap">
             <div className="about-section__img" style={{ backgroundImage: 'url(/images/storage-tanks.jpg)' }}/>
             <div className="about-section__img-overlay"/>
