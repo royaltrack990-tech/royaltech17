@@ -4,16 +4,8 @@ import { useLang } from '../context/LanguageContext'
 import { t } from '../data/translations'
 import './HeroSlider.css'
 
-// Indices 0-3 = ROFS (shared video background)
-// Indices 4-6 = image backgrounds
+// Single persistent video background for all hero slides — no images at all
 const VIDEO_SRC = '/videos/royal_tech_video.mp4'
-const VIDEO_GROUP_END = 3 // last index that uses the video
-
-const IMAGE_SLIDES = [
-  { bg: '/images/port-containers-sunrise.jpg', accent: '#5BB8A0' }, // index 4 - General Trading
-  { bg: '/images/maersk-ship.jpg', accent: '#FFD166' },             // index 5 - Oil & Gas Trading
-  { bg: '/images/slide8.jpg', accent: '#7C9A6E' },                  // index 6 - Royal Track
-]
 
 const ACCENTS = ['#F5A623', '#F5A623', '#F5A623', '#F5A623', '#5BB8A0', '#FFD166', '#7C9A6E']
 
@@ -26,10 +18,24 @@ export default function HeroSlider() {
   const [textKey, setTextKey] = useState(0)
   const [textVisible, setTextVisible] = useState(true)
   const [progress, setProgress] = useState(0)
+  const [videoFaded, setVideoFaded] = useState(false)
   const timerRef = useRef(null)
   const switchRef = useRef(null)
   const progressRef = useRef(null)
+  const videoRef = useRef(null)
   const total = tx.length
+
+  // Fade the video out just before it loops, then fade it back in once it restarts
+  const handleTimeUpdate = useCallback((e) => {
+    const v = e.target
+    if (!v.duration) return
+    const remaining = v.duration - v.currentTime
+    if (remaining < 0.45) {
+      setVideoFaded(true)
+    } else if (v.currentTime < 0.45) {
+      setVideoFaded(false)
+    }
+  }, [])
 
   const goTo = useCallback((idx) => {
     setTextVisible(false)
@@ -66,41 +72,26 @@ export default function HeroSlider() {
     return () => cancelAnimationFrame(progressRef.current)
   }, [current])
 
-  const isVideoActive = current <= VIDEO_GROUP_END
   const activeAccent = ACCENTS[current]
 
   return (
     <section className="hero">
-      {/* Persistent video layer, mounted once, never restarts while cycling slides 0-3 */}
-      <div className={`hero__slide hero__slide--video ${isVideoActive ? 'active' : ''}`}>
+      {/* Single persistent video background, used for every slide, mounted once so it never restarts */}
+      <div className="hero__slide hero__slide--video active">
         <video
-          className="hero__video"
+          ref={videoRef}
+          className={`hero__video ${videoFaded ? 'is-faded' : ''}`}
           src={VIDEO_SRC}
-          poster="/images/slide1.jpg"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
+          onTimeUpdate={handleTimeUpdate}
         />
         <div className="hero__overlay" />
         <div className="hero__gradient" />
       </div>
-
-      {/* Image slides, crossfade among themselves and against the video layer */}
-      {IMAGE_SLIDES.map((slide, i) => {
-        const realIndex = i + VIDEO_GROUP_END + 1
-        return (
-          <div
-            key={realIndex}
-            className={`hero__slide ${current === realIndex ? 'active' : ''}`}
-          >
-            <div className="hero__bg" style={{ backgroundImage: `url(${slide.bg})` }} />
-            <div className="hero__overlay" />
-            <div className="hero__gradient" />
-          </div>
-        )
-      })}
 
       <div className="hero__gold-line" />
 
