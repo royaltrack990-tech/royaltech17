@@ -1,6 +1,6 @@
 .side-nav {
   position: fixed;
-  top: 170px;
+  top: 96px;
   right: 1.75rem;
   z-index: 998;
   display: flex;
@@ -44,7 +44,7 @@
 html[dir="rtl"] .side-nav { right: auto; left: 1.75rem; }
 
 @media (max-width: 768px) {
-  .side-nav { top: 130px; right: 1rem; gap: 0.4rem; }
+  .side-nav { top: 70px; right: 1rem; gap: 0.4rem; }
   html[dir="rtl"] .side-nav { left: 1rem; }
   .side-nav__btn { padding: 0.45rem 0.7rem; }
   .side-nav__text { font-size: 0.62rem; }
