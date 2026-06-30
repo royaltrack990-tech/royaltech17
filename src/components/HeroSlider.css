@@ -18,7 +18,10 @@
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
   background: var(--navy);
+  opacity: 1;
+  transition: opacity 0.45s ease;
 }
+.hero__video.is-faded { opacity: 0; }
 
 /* Mobile: still full-bleed cover (not contain), keep top of frame visible */
 @media (max-width: 768px) {
@@ -60,7 +63,16 @@
 .hero__content.is-hiding { opacity: 0; transform: translateY(8px); }
 .hero__content.is-visible { opacity: 1; transform: translateY(0); }
 
-.hero__text { max-width: 680px; }
+.hero__text { max-width: 560px; }
+
+@media (min-width: 1200px) {
+  .hero__content { transform: translateX(-4vw); }
+  .hero__content.is-hiding { transform: translateX(-4vw) translateY(8px); }
+  .hero__content.is-visible { transform: translateX(-4vw) translateY(0); }
+  html[dir="rtl"] .hero__content { transform: translateX(4vw); }
+  html[dir="rtl"] .hero__content.is-hiding { transform: translateX(4vw) translateY(8px); }
+  html[dir="rtl"] .hero__content.is-visible { transform: translateX(4vw) translateY(0); }
+}
 
 .hero__eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
