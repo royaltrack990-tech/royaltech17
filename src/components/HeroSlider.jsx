@@ -6,7 +6,7 @@ import './HeroSlider.css'
 
 // Indices 0-3 = ROFS (shared video background)
 // Indices 4-6 = image backgrounds
-const VIDEO_SRC = '/videos/rofs-hero.mp4'
+const VIDEO_SRC = '/videos/royal_tech_video.mp4'
 const VIDEO_GROUP_END = 3 // last index that uses the video
 
 const IMAGE_SLIDES = [
